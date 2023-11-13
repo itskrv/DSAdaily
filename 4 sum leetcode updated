@@ -14,7 +14,7 @@ public:
              continue;
             for(int j=i+1;j<n-2;j++){
                
-             //remove duplicate for first element of triplete
+             //remove duplicate for second element of triplete
               if(j>i+1 && arr[j]==arr[j-1])
               continue;
            
@@ -24,10 +24,10 @@ public:
 
                 if(sum==target){
                     ans.push_back({arr[i],arr[j],arr[start],arr[end]});
-                    //remove duplicate for second element of triplete
+                    //remove duplicate for third element of triplete
                     while(start<end && arr[start]==arr[start+1])
                     start++;
-                    //remove duplicates for third element of triplete
+                    //remove duplicates for fourth element of triplete
                     while(start<end && arr[end]==arr[end-1])
                     end--;
 
