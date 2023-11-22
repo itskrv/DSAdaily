@@ -1,8 +1,103 @@
+// Method 1::
+
 class Solution {
 public:
     int strStr(string haystack, string needle) {
 
        return haystack.find(needle);
+        
+    }
+};
+
+//  method 2:: Brute force
+
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+
+        // Brute force
+
+        int n=haystack.size(), m=needle.size();
+        for(int i=0;i<=n-m;i++){
+
+
+            int first=i, second=0;
+
+            while(second<m){
+
+
+                if(haystack[first] != needle[second])
+                break;
+
+
+                else
+                first++,second++;
+
+            }
+            if(second==m)
+            return first-second;
+        }
+        
+        return -1;
+    }
+};
+
+// Method 3:: Using KMP algorithm
+
+
+
+class Solution {
+public:
+   void findLps(vector<int> &lps, string n){
+    
+      int pre=0, suff=1;
+      while(suff<n.size()){
+          if(n[pre]==n[suff]){
+              lps[suff]=pre+1;
+              pre++,suff++;     
+           }
+           else{
+
+               if(pre==0){
+                   lps[suff]=0;
+                   suff++;
+               }
+               else
+               pre=lps[pre-1];
+           }
+
+      }
+
+   }
+
+
+
+    int strStr(string haystack, string needle) {
+
+      // using Kmp algorithm
+
+
+      vector<int> lps(needle.size(),0);
+      findLps(lps,needle);
+      int first=0,second=0;
+      while(second<needle.size() && first<haystack.size())
+       {
+          if(needle[second]==haystack[first])
+          second++,first++;
+
+          else{
+            if(second==0)
+            first++;
+            else
+            second=lps[second-1];
+          }
+       }
+
+     if(second==needle.size())
+     return first-second;
+     
+        return -1;
         
     }
 };
