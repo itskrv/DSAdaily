@@ -1,0 +1,41 @@
+class Solution {
+public:
+    std::string shortestPalindrome(std::string str) {
+        // string reverse
+         string rev = str;
+         reverse(rev.begin(), rev.end());
+        int size = str.size();
+        str += '$'; // separator
+        str += rev;
+
+        // calculate longest prefix palindrome
+        int n = str.size();
+        vector<int> lps(n, 0);
+        int pre = 0, suff = 1;
+
+        while (suff < n) {
+            if (str[pre] == str[suff]) {
+                lps[suff] = pre + 1;
+                pre++, suff++;
+            } else {
+                if (pre == 0) {
+                    lps[suff] = 0;
+                    suff++;
+                } else
+                    pre = lps[pre - 1];
+            }
+        }
+
+        int k = size - lps[n - 1];
+      string ans= rev.substr(0, k)+str;
+      string ansstring="";
+
+      for(int i=0;i<ans.size();i++){
+          if(ans[i]=='$')
+          break;
+
+          ansstring.push_back(ans[i]);
+      }
+      return ansstring;
+    }
+};
